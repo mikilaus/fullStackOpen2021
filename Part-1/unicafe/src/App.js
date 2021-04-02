@@ -5,21 +5,24 @@ const Button = ({ type, handleClick }) => (
 );
 
 const Statistics = ({ all, good, bad, neutral }) => {
-  return (
-    <p>
-      good {good}
-      <br />
-      neutral {neutral}
-      <br />
-      bad {bad}
-      <br />
-      all {all}
-      <br />
-      average {(bad * -1 + good * 1) / all}
-      <br />
-      positive {(good / all) * 100} %
-    </p>
-  );
+  if (all !== 0) {
+    return (
+      <p>
+        good {good}
+        <br />
+        neutral {neutral}
+        <br />
+        bad {bad}
+        <br />
+        all {all}
+        <br />
+        average {(bad * -1 + good * 1) / all}
+        <br />
+        positive {(good / all) * 100} %
+      </p>
+    );
+  }
+  return <p>No feedback given</p>;
 };
 
 const App = () => {
