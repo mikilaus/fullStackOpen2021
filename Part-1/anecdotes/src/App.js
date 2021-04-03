@@ -10,7 +10,15 @@ const App = () => {
     "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
   ];
 
+  let numberOfAnecdotes = anecdotes.length;
+
   const [selected, setSelected] = useState(0);
+  const [vote, setVote] = useState(
+    Array.apply(null, new Array(numberOfAnecdotes)).map(
+      Number.prototype.valueOf,
+      0
+    )
+  );
 
   const handleClick = () => {
     let max = anecdotes.length;
@@ -23,9 +31,18 @@ const App = () => {
     setSelected(randomNumber);
   };
 
+  const voteClick = () => {
+    let newArray = [...vote];
+    newArray[selected] += 1;
+    console.log(newArray);
+    setVote(newArray);
+  };
+
   return (
     <div>
       {anecdotes[selected]} <br />
+      has {vote[selected]} votes <br />
+      <button onClick={voteClick}>vote</button>
       <button onClick={handleClick}>next anecdote</button>
     </div>
   );
