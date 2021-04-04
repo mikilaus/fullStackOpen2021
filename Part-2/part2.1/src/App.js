@@ -5,6 +5,7 @@ const Course = ({ course }) => {
     <>
       <Header course={course} />
       <Content course={course} />
+      <Total course={course} />
     </>
   );
 };
@@ -29,6 +30,15 @@ const Content = ({ course }) => {
   } else {
     return <p>There is no any part in this course.</p>;
   }
+};
+
+const Total = ({ course }) => {
+  let total = 0;
+  for (let part of course.parts) {
+    total += part.exercises;
+  }
+
+  return <p>Total of {total} exercises</p>;
 };
 
 const App = () => {
