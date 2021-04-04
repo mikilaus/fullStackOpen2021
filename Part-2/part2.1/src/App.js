@@ -22,13 +22,13 @@ const Part = ({ name, exercises }) => {
 };
 
 const Content = ({ course }) => {
-  return (
-    <>
-      <Part name={course.parts[0].name} exercises={course.parts[0].exercises} />
-      <Part name={course.parts[1].name} exercises={course.parts[1].exercises} />
-      <Part name={course.parts[2].name} exercises={course.parts[2].exercises} />
-    </>
-  );
+  if (course.parts.length !== 0) {
+    return course.parts.map((part) => (
+      <Part key={part.id} name={part.name} exercises={part.exercises} />
+    ));
+  } else {
+    return <p>There is no any part in this course.</p>;
+  }
 };
 
 const App = () => {
