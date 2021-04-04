@@ -33,10 +33,11 @@ const Content = ({ course }) => {
 };
 
 const Total = ({ course }) => {
-  let total = 0;
-  for (let part of course.parts) {
-    total += part.exercises;
-  }
+  let arrayOfExercises = course.parts.map((part) => part.exercises);
+
+  let total = arrayOfExercises.reduce((acc, value) => {
+    return acc + value;
+  });
 
   return <p>Total of {total} exercises</p>;
 };
