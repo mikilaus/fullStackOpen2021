@@ -5,7 +5,7 @@ function Persons({ persons }) {
   return (
     <div>
       {persons.map((person) => (
-        <SinglePerson person={person} />
+        <SinglePerson key={person.id} person={person} />
       ))}
     </div>
   );

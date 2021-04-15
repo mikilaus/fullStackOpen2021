@@ -2,7 +2,7 @@ import React from "react";
 
 function SinglePerson({ person }) {
   return (
-    <p key={person.name}>
+    <p>
       {person.name} {person.number}
     </p>
   );
