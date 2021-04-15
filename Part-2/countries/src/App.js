@@ -19,6 +19,20 @@ function App() {
       country.name.toLowerCase().includes(searchValue.toLowerCase())
     );
 
+    if (filteredCountries.length === 1) {
+      let weatherParams = {
+        access_key: "c54c7600a7e6b2a1708c92ab7fe5037b",
+        query: `${filteredCountries[0].capital}`,
+      };
+
+      console.log(weatherParams);
+
+      axios
+        .get("https://api.weatherstack.com/current", { weatherParams })
+        .then((response) => {
+          console.log(response.data);
+        });
+    }
     console.log(filteredCountries);
 
     setCountries(filteredCountries);
