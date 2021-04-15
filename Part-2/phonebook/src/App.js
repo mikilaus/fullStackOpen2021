@@ -3,7 +3,7 @@ import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 
-import { getAll, create } from "./services/persons";
+import { getAll, create, deletePerson } from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -52,6 +52,13 @@ const App = () => {
     });
   };
 
+  const deleteName = (id) => {
+    deletePerson(id).then((deletedName) => {
+      let filteredPersons = persons.filter((person) => person.id !== id);
+      setPersons(filteredPersons);
+    });
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -69,7 +76,7 @@ const App = () => {
       />
       <h2>Numbers</h2>
 
-      <Persons persons={persons} />
+      <Persons persons={persons} deleteName={deleteName} />
     </div>
   );
 };
