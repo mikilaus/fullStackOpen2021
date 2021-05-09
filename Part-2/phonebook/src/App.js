@@ -53,6 +53,7 @@ const App = () => {
         ) {
           updatePerson(name.id, changedName)
             .then((returnedPerson) => {
+              console.log(returnedPerson);
               setPersons(
                 persons.map((person) =>
                   person.name.toLowerCase() === name.name.toLowerCase()
@@ -76,12 +77,17 @@ const App = () => {
       }
 
       let nameObject = { name: newName, number: newNumber };
-      create(nameObject).then((returnedName) => {
-        setPersons(persons.concat(returnedName));
-        setNotification(`Added ${newName}`, "success");
-        setNewName("");
-        setNewNumber("");
-      });
+      create(nameObject)
+        .then((returnedName) => {
+          setPersons(persons.concat(returnedName));
+          setNotification(`Added ${newName}`, "success");
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+          setNotification(error.response.data.error, "error");
+        });
     } else {
       alert("Name or number is empty.");
     }
