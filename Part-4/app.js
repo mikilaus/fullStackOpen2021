@@ -4,6 +4,9 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const blogsRouter = require("./controllers/blogs");
+const usersRouter = require("./controllers/users");
+const loginRouter = require("./controllers/login");
+const middleWare = require("./middleware");
 const mongoose = require("mongoose");
 
 logger.info("connecting to", config.MONGODB_URI);
@@ -20,5 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(blogsRouter);
+app.use(usersRouter);
+app.use(loginRouter);
 
 module.exports = app;
