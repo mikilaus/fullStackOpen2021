@@ -47,7 +47,7 @@ blogsRouter.delete(
       const blog = await Blog.findById(request.params.id);
     } catch (error) {
       response.json({
-        error: "Blog with this id has not found",
+        error: "Blog has not found",
       });
     }
 
