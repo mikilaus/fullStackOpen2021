@@ -43,14 +43,7 @@ blogsRouter.delete(
   "/api/blogs/:id",
   userExtractor,
   async (request, response) => {
-    try {
-      const blog = await Blog.findById(request.params.id);
-    } catch (error) {
-      response.json({
-        error: "Blog has not found",
-      });
-    }
-
+    const blog = await Blog.findById(request.params.id);
     const user = request.user;
 
     if (user.id !== blog.user.toString()) {
@@ -63,7 +56,9 @@ blogsRouter.delete(
       await Blog.findByIdAndRemove(request.params.id);
       response.status(204).end();
     } catch (error) {
-      console.log(error);
+      response.json({
+        error: "Blog has not found",
+      });
     }
   }
 );

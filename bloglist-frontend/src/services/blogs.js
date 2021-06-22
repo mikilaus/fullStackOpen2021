@@ -7,9 +7,11 @@ const setToken = (newToken) => {
   token = `bearer ${newToken}`;
 };
 
-const getAll = () => {
-  const request = axios.get(baseUrl);
-  return request.then((response) => response.data);
+const getAll = async () => {
+  const response = await axios.get(baseUrl);
+  const blogArray = response.data;
+  const sortedBlogArray = blogArray.sort((a, b) => b.likes - a.likes);
+  return sortedBlogArray;
 };
 
 const create = async (newObject) => {
@@ -20,4 +22,17 @@ const create = async (newObject) => {
   return response.data;
 };
 
-export default { getAll, create, setToken };
+const update = async (updatedObject, blogId) => {
+  const response = await axios.put(`/api/blogs/${blogId}`, updatedObject);
+  return response.data;
+};
+
+const remove = async (blogId) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  const request = await axios.delete(`/api/blogs/${blogId}`, config);
+  console.log(request);
+};
+
+export default { getAll, create, setToken, update, remove };
