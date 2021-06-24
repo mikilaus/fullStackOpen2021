@@ -17,6 +17,11 @@ blogsRouter.post("/api/blogs", userExtractor, async (request, response) => {
     return response.status(401).json({ error: "token missing or invalid" });
   }
   const thisUser = await User.findById(user.id);
+  if (!thisUser) {
+    return response.status(400).json({
+      error: "user not found",
+    });
+  }
 
   if (!body.title || !body.url) {
     return response.status(400).json({

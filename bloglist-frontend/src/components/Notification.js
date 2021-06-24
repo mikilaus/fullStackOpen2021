@@ -11,7 +11,11 @@ const Notification = ({ message, type }) => {
       padding: 10,
       marginBottom: 10,
     };
-    return <div style={errorStyle}>{message}</div>;
+    return (
+      <div className="error" style={errorStyle}>
+        {message}
+      </div>
+    );
   }
   if (type === "success") {
     const successStyle = {

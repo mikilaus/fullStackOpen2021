@@ -26,4 +26,9 @@ app.use(blogsRouter);
 app.use(usersRouter);
 app.use(loginRouter);
 
+if (process.env.NODE_ENV === "test") {
+  const testingRouter = require("./controllers/testing");
+  app.use(testingRouter);
+}
+
 module.exports = app;
