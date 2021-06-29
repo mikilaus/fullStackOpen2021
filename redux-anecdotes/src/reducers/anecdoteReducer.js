@@ -43,6 +43,16 @@ const anecdoteReducer = (state = initialState, action) => {
 
       return [...state, newAnecdote];
 
+    case "FILTER":
+      const filteredAnecdotes = state.filter((anecdote) =>
+        anecdote.content
+          .toLowerCase()
+          .includes(action.data.content.toLowerCase())
+      );
+      console.log(filteredAnecdotes);
+
+      return filteredAnecdotes;
+
     default:
       return state;
   }
@@ -63,6 +73,15 @@ export const voteAnecdote = (id, votes) => {
     data: {
       id: id,
       votes: votes,
+    },
+  };
+};
+
+export const filterAnecdote = (searchStr) => {
+  return {
+    type: "FILTER",
+    data: {
+      content: searchStr,
     },
   };
 };
