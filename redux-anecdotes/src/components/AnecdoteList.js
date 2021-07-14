@@ -32,7 +32,8 @@ const Anecdotes = () => {
             <button
               onClick={() =>
                 vote(anecdote.id, anecdote.votes, anecdote.content)
-              }>
+              }
+            >
               vote
             </button>
           </div>
