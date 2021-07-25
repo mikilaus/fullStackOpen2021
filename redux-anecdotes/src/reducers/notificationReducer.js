@@ -1,12 +1,8 @@
 const notificationReducer = (state = null, action) => {
   switch (action.type) {
-    case "VOTED":
-      const newState = `you voted ${action.data.content}`;
+    case "NOTIFICATION":
+      const newState = action.data.content;
       return newState;
-
-    case "CREATED":
-      const newState2 = action.data.content;
-      return newState2;
 
     case "DELETE":
       return null;
@@ -16,21 +12,26 @@ const notificationReducer = (state = null, action) => {
   }
 };
 
-export const voteNotification = (content) => {
-  return {
-    type: "VOTED",
-    data: {
-      content: content,
-    },
-  };
-};
+let timeoutId = null;
 
-export const createNotification = (content) => {
-  return {
-    type: "CREATED",
-    data: {
-      content: content,
-    },
+export const setNotification = (content, lasts) => {
+  return async (dispatch) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      dispatch({
+        type: "DELETE",
+      });
+    }, lasts * 1000);
+
+    dispatch({
+      type: "NOTIFICATION",
+      data: {
+        content: content,
+      },
+    });
   };
 };
 
