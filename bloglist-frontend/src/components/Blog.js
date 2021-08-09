@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { likeBlog, deleteBlog } from "../reducers/blogReducer";
+import { setNotification } from "../reducers/notificationReducer";
 
-const Blog = ({ blog, handleLike, handleRemove, user, blogUserName }) => {
+const Blog = ({ blog, user }) => {
   const [visible, setVisible] = useState(false);
+
+  const dispatch = useDispatch();
 
   const blogStyle = {
     paddingTop: 5,
@@ -19,10 +24,20 @@ const Blog = ({ blog, handleLike, handleRemove, user, blogUserName }) => {
     cursor: "pointer",
   };
 
+  const handleLike = (likedBlog) => {
+    dispatch(likeBlog(likedBlog));
+    dispatch(setNotification(`You liked '${likedBlog.title}'`, "success", 5));
+  };
+
+  const handleRemove = (blogToRemove) => {
+    dispatch(deleteBlog(blogToRemove.id));
+  };
+
   return (
     <div style={blogStyle} className="blog">
       <p>
-        {blog.title} {blog.author}{" "}
+        {blog.title}
+        {blog.author}{" "}
         <button onClick={() => setVisible(!visible)}>
           {!visible ? "view" : "hide"}
         </button>
@@ -39,7 +54,7 @@ const Blog = ({ blog, handleLike, handleRemove, user, blogUserName }) => {
             </span>
           </p>
           <p>{blog.user.name}</p>
-          {user && user.username === blogUserName && (
+          {user && user.username === blog.user.username && (
             <button
               style={deleteButtonStyle}
               onClick={() => handleRemove(blog)}>

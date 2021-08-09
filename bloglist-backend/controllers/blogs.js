@@ -74,7 +74,7 @@ blogsRouter.put("/api/blogs/:id", async (request, response) => {
       request.params.id,
       request.body,
       { new: true }
-    );
+    ).populate("user", { username: 1, name: 1 });
     response.json(updatedBlog);
   } catch (error) {
     console.log(error);

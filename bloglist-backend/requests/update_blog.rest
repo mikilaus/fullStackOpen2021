@@ -1,4 +1,4 @@
-PUT http://localhost:3003/api/blogs/60bf36ff668ed92a16505e82
+PUT http://localhost:3003/api/blogs/60cc714c73d19313d7e86602
 Content-Type: application/json
 
 {
@@ -6,5 +6,5 @@ Content-Type: application/json
     "author": "Edsger W. Dijkstra",
     "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
     "likes": 12,
-    "id": "60bf36ff668ed92a16505e82"
+    "id": "60cc714c73d19313d7e86602"
   }
