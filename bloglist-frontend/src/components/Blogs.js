@@ -1,15 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import Blog from "./Blog";
+import MainBlog from "./MainBlog";
 
-const Blogs = ({ user }) => {
+const Blogs = () => {
   const blogs = useSelector((state) => state.blogs);
 
   return (
     <div>
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} user={user} />
+        <MainBlog key={blog.id} blog={blog} />
       ))}
     </div>
   );

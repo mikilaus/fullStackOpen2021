@@ -1,19 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { likeBlog, deleteBlog } from "../reducers/blogReducer";
 import { setNotification } from "../reducers/notificationReducer";
 
 const Blog = ({ blog, user }) => {
-  const [visible, setVisible] = useState(false);
-
   const dispatch = useDispatch();
 
   const blogStyle = {
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 2,
-    border: "solid",
-    borderWidth: 2,
     marginBottom: 5,
     marginTop: 10,
   };
@@ -33,36 +29,32 @@ const Blog = ({ blog, user }) => {
     dispatch(deleteBlog(blogToRemove.id));
   };
 
+  if (!blog) {
+    return null;
+  }
+
   return (
     <div style={blogStyle} className="blog">
-      <p>
-        {blog.title}
-        {blog.author}{" "}
-        <button onClick={() => setVisible(!visible)}>
-          {!visible ? "view" : "hide"}
-        </button>
-      </p>
-      {visible && (
-        <div>
-          <p>{blog.url}</p>
-          <p>
-            Likes: {blog.likes}{" "}
-            <span>
-              <button id="like-button" onClick={() => handleLike(blog)}>
-                Like
-              </button>
-            </span>
-          </p>
-          <p>{blog.user.name}</p>
-          {user && user.username === blog.user.username && (
-            <button
-              style={deleteButtonStyle}
-              onClick={() => handleRemove(blog)}>
-              remove
+      <h3>
+        {blog.title} {blog.author}
+      </h3>
+      <div>
+        <a href={blog.url}>{blog.url}</a>
+        <p>
+          Likes: {blog.likes}{" "}
+          <span>
+            <button id="like-button" onClick={() => handleLike(blog)}>
+              Like
             </button>
-          )}
-        </div>
-      )}
+          </span>
+        </p>
+        <p>{blog.user.name}</p>
+        {user && user.username === blog.user.username && (
+          <button style={deleteButtonStyle} onClick={() => handleRemove(blog)}>
+            remove
+          </button>
+        )}
+      </div>
     </div>
   );
 };

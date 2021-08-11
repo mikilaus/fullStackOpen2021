@@ -16,6 +16,7 @@ import Togglable from "./components/Togglable";
 import Blogform from "./components/Blogform";
 import Users from "./components/Users";
 import User from "./components/User";
+import Blog from "./components/Blog";
 
 const App = () => {
   const [username, setUsername] = useState("");
@@ -28,6 +29,7 @@ const App = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user);
   const users = useSelector((state) => state.users);
+  const blogs = useSelector((state) => state.blogs);
 
   useEffect(() => {
     dispatch(initBlogs());
@@ -109,9 +111,16 @@ const App = () => {
     setUrl(event.target.value);
   };
 
-  const match = useRouteMatch("/users/:id");
-  const clickedUser = match
-    ? users.find((user) => user.id === match.params.id)
+  const userMatch = useRouteMatch("/users/:id");
+
+  const clickedUser = userMatch
+    ? users.find((user) => user.id === userMatch.params.id)
+    : null;
+
+  const blogMatch = useRouteMatch("/blogs/:id");
+
+  const clickedBlog = blogMatch
+    ? blogs.find((blog) => blog.id === blogMatch.params.id)
     : null;
 
   return (
@@ -144,12 +153,15 @@ const App = () => {
         <Route path="/users/:id">
           <User user={clickedUser} />
         </Route>
+        <Route path="/blogs/:id">
+          <Blog user={currentUser} blog={clickedBlog} />
+        </Route>
         <Route path="/users">
           <h2>Users</h2>
           <Users users={users} />
         </Route>
         <Route path="/">
-          <Blogs user={currentUser} />
+          <Blogs />
           {currentUser && (
             <>
               <h2>Create a new blog</h2>
