@@ -17,6 +17,7 @@ import Blogform from "./components/Blogform";
 import Users from "./components/Users";
 import User from "./components/User";
 import Blog from "./components/Blog";
+import Navigation from "./components/Navigation";
 
 const App = () => {
   const [username, setUsername] = useState("");
@@ -125,6 +126,7 @@ const App = () => {
 
   return (
     <div>
+      <Navigation currentUser={currentUser} handleLogout={handleLogout} />
       <h1>Blogs</h1>
       <Notification />
       {!currentUser && (
@@ -138,7 +140,7 @@ const App = () => {
           />
         </Togglable>
       )}
-      {currentUser && (
+      {/* {currentUser && (
         <p>
           {currentUser.username} logged in{" "}
           <span>
@@ -147,7 +149,7 @@ const App = () => {
             </button>
           </span>
         </p>
-      )}
+      )} */}
 
       <Switch>
         <Route path="/users/:id">

@@ -16,9 +16,9 @@ const Users = ({ users }) => (
           (user) =>
             user.username !== "root" && (
               <tr key={user.id}>
-                <Link to={`/users/${user.id}`}>
-                  <td>{user.name}</td>
-                </Link>
+                <td>
+                  <Link to={`/users/${user.id}`}>{user.name}</Link>
+                </td>
                 <td>{user.blogs.length}</td>
               </tr>
             )
