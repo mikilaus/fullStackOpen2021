@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { initBlogs } from "./reducers/blogReducer";
 import { setNotification } from "./reducers/notificationReducer";
 import { setUser } from "./reducers/userReducer";
+import { initUsers } from "./reducers/usersReducer";
 
 import Blogs from "./components/Blogs";
 import blogService from "./services/blogs";
@@ -14,6 +15,7 @@ import Loginform from "./components/Loginform";
 import Togglable from "./components/Togglable";
 import Blogform from "./components/Blogform";
 import Users from "./components/Users";
+import User from "./components/User";
 
 const App = () => {
   const [username, setUsername] = useState("");
@@ -25,9 +27,11 @@ const App = () => {
   const BlogformRef = useRef();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user);
+  const users = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(initBlogs());
+    dispatch(initUsers());
   }, [dispatch]);
 
   useEffect(() => {
@@ -55,11 +59,13 @@ const App = () => {
     }
     console.log("logging in with", username, password);
   };
+
   const handleLogout = (event) => {
     event.preventDefault();
     window.localStorage.removeItem("loggedUser");
     dispatch(setUser(null));
   };
+
   const handleCreate = async (event) => {
     event.preventDefault();
     const newBlog = {
@@ -103,8 +109,13 @@ const App = () => {
     setUrl(event.target.value);
   };
 
+  const match = useRouteMatch("/users/:id");
+  const clickedUser = match
+    ? users.find((user) => user.id === match.params.id)
+    : null;
+
   return (
-    <Router>
+    <div>
       <h1>Blogs</h1>
       <Notification />
       {!currentUser && (
@@ -130,9 +141,12 @@ const App = () => {
       )}
 
       <Switch>
+        <Route path="/users/:id">
+          <User user={clickedUser} />
+        </Route>
         <Route path="/users">
           <h2>Users</h2>
-          <Users />
+          <Users users={users} />
         </Route>
         <Route path="/">
           <Blogs user={currentUser} />
@@ -154,7 +168,7 @@ const App = () => {
           )}
         </Route>
       </Switch>
-    </Router>
+    </div>
   );
 };
 
