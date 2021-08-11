@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { initBlogs } from "./reducers/blogReducer";
-import { initUsers } from "./reducers/usersReducer";
 import { setNotification } from "./reducers/notificationReducer";
 import { setUser } from "./reducers/userReducer";
 
@@ -29,7 +28,6 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initBlogs());
-    dispatch(initUsers());
   }, [dispatch]);
 
   useEffect(() => {
