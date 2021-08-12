@@ -1,4 +1,5 @@
 import React from "react";
+import { Navbar, Button, Nav } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 
 import { Link } from "react-router-dom";
@@ -18,34 +19,27 @@ function Navigation({ currentUser }) {
     padding: 5,
   };
 
-  const navStyle = {
-    backgroundColor: "grey",
-  };
-
-  const userStyle = {
-    display: "inline-block",
-    marginLeft: 5,
-  };
-
   return (
-    <div style={navStyle}>
-      <Link style={padding} to="/">
-        Blogs
-      </Link>
+    <Navbar className="justify-content-center bg-info">
+      <Nav.Item>
+        <Link style={padding} to="/">
+          Blogs
+        </Link>
+      </Nav.Item>
       <Link style={padding} to="/users">
         Users
       </Link>
       {currentUser && (
-        <p style={userStyle}>
-          {currentUser.name} logged in{" "}
-          <span>
-            <button type="button" onClick={handleLogout}>
+        <>
+          <Nav.Item className="ml-5">{currentUser.name} logged in </Nav.Item>
+          <Nav.Item>
+            <Button variant="link" onClick={handleLogout}>
               Logout
-            </button>
-          </span>
-        </p>
+            </Button>
+          </Nav.Item>
+        </>
       )}
-    </div>
+    </Navbar>
   );
 }
 

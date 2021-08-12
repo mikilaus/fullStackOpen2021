@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Container } from "react-bootstrap";
 
 import { initBlogs } from "./reducers/blogReducer";
 import { setNotification } from "./reducers/notificationReducer";
@@ -126,54 +127,55 @@ const App = () => {
   }
 
   return (
-    <div>
+    <>
       <Navigation currentUser={currentUser} />
-      <h1>Blogs</h1>
-      <Notification />
-      {!currentUser && (
-        <Togglable buttonLabel="log in">
-          <Loginform
-            username={username}
-            password={password}
-            handleLogin={handleLogin}
-            handleUsernameChange={handleUsernameChange}
-            handlePasswordChange={handlePasswordChange}
-          />
-        </Togglable>
-      )}
+      <Container className="col-12 col-md-8 col-lg-6 bg-light">
+        <h1 className="mb-5 mt-3">Blog App</h1>
+        <Notification />
+        {!currentUser && (
+          <Togglable buttonLabel="log in">
+            <Loginform
+              username={username}
+              password={password}
+              handleLogin={handleLogin}
+              handleUsernameChange={handleUsernameChange}
+              handlePasswordChange={handlePasswordChange}
+            />
+          </Togglable>
+        )}
 
-      <Switch>
-        <Route path="/users/:id">
-          <User user={clickedUser} />
-        </Route>
-        <Route path="/blogs/:id">
-          <Blog user={currentUser} blog={clickedBlog} />
-        </Route>
-        <Route path="/users">
-          <h2>Users</h2>
-          <Users users={users} />
-        </Route>
-        <Route path="/">
-          <Blogs />
-          {currentUser && (
-            <>
-              <h2>Create a new blog</h2>
-              <Togglable buttonLabel="add blog" ref={BlogformRef}>
-                <Blogform
-                  title={title}
-                  author={author}
-                  url={url}
-                  handleCreate={handleCreate}
-                  handleTitleChange={handleTitleChange}
-                  handleAuthorChange={handleAuthorChange}
-                  handleUrlChange={handleUrlChange}
-                />
-              </Togglable>
-            </>
-          )}
-        </Route>
-      </Switch>
-    </div>
+        <Switch>
+          <Route path="/users/:id">
+            <User user={clickedUser} />
+          </Route>
+          <Route path="/blogs/:id">
+            <Blog user={currentUser} blog={clickedBlog} />
+          </Route>
+          <Route path="/users">
+            <Users users={users} />
+          </Route>
+          <Route path="/">
+            <Blogs />
+            {currentUser && (
+              <>
+                <h4 className="mt-3 mb-3">Create a new blog</h4>
+                <Togglable buttonLabel="add blog" ref={BlogformRef}>
+                  <Blogform
+                    title={title}
+                    author={author}
+                    url={url}
+                    handleCreate={handleCreate}
+                    handleTitleChange={handleTitleChange}
+                    handleAuthorChange={handleAuthorChange}
+                    handleUrlChange={handleUrlChange}
+                  />
+                </Togglable>
+              </>
+            )}
+          </Route>
+        </Switch>
+      </Container>
+    </>
   );
 };
 

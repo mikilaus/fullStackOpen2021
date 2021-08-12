@@ -58,13 +58,13 @@ const Blog = ({ blog, user }) => {
   };
 
   if (!blog) {
-    return null;
+    return <p>No blog to see</p>;
   }
 
   return (
     <div style={blogStyle} className="blog">
       <h3>
-        {blog.title} {blog.author}
+        {blog.title} by {blog.author}
       </h3>
       <div>
         <a href={blog.url}>{blog.url}</a>

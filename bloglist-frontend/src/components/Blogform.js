@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Form, Button } from "react-bootstrap";
 
 const Blogform = ({
   title,
@@ -21,39 +22,41 @@ const Blogform = ({
   };
 
   return (
-    <form onSubmit={handleCreate}>
-      <div>
-        title:
-        <input
+    <Form onSubmit={handleCreate}>
+      <Form.Group className="mb-3">
+        <Form.Label>Title:</Form.Label>
+        <Form.Control
           id="title"
           type="text"
           value={title}
           name="title"
           onChange={handleTitleChange}
         />
-      </div>
-      <div>
-        author:
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Author:</Form.Label>
+        <Form.Control
           id="author"
           type="text"
           value={author}
           name="author"
           onChange={handleAuthorChange}
         />
-      </div>
-      <div>
-        url:
-        <input
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Url:</Form.Label>
+        <Form.Control
           id="url"
           type="text"
           value={url}
           name="url"
           onChange={handleUrlChange}
         />
-      </div>
-      <button type="submit">create</button>
-    </form>
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Create
+      </Button>
+    </Form>
   );
 };
 
