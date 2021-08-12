@@ -6,6 +6,7 @@ const cors = require("cors");
 const blogsRouter = require("./controllers/blogs");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
+const commentsRouter = require("./controllers/comments");
 const middleWare = require("./middleware");
 const mongoose = require("mongoose");
 
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use(blogsRouter);
 app.use(usersRouter);
 app.use(loginRouter);
+app.use(commentsRouter);
 
 if (process.env.NODE_ENV === "test") {
   const testingRouter = require("./controllers/testing");

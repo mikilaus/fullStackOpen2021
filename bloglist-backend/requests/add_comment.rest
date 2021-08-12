@@ -1,0 +1,6 @@
+POST http://localhost:3003/api/blogs/60cc714c73d19313d7e86602/comments
+Content-Type: application/json
+
+{    
+    "content": "ez is jo lenne ha menne"
+}

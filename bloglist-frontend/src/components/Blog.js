@@ -1,10 +1,23 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
 import { likeBlog, deleteBlog } from "../reducers/blogReducer";
 import { setNotification } from "../reducers/notificationReducer";
+import { initComments } from "../reducers/commentsReducer";
+
+import commentService from "../services/comments";
 
 const Blog = ({ blog, user }) => {
+  const [newComment, setNewComment] = useState("");
+
   const dispatch = useDispatch();
+  const comments = useSelector((state) => state.comments);
+
+  let commentsOfBlog = null;
+
+  if (comments && blog) {
+    commentsOfBlog = comments.filter((comment) => comment.blogId === blog.id);
+  }
 
   const blogStyle = {
     paddingTop: 5,
@@ -18,6 +31,21 @@ const Blog = ({ blog, user }) => {
     backgroundColor: "blue",
     color: "white",
     cursor: "pointer",
+  };
+
+  const handleCommentChange = (event) => {
+    setNewComment(event.target.value);
+  };
+
+  const createNewComment = async (event) => {
+    event.preventDefault();
+    const commentToAdd = {
+      content: newComment,
+    };
+    await commentService.create(commentToAdd, blog.id);
+    dispatch(setNotification("New comment added!", "success", 5));
+    dispatch(initComments());
+    setNewComment("");
   };
 
   const handleLike = (likedBlog) => {
@@ -48,12 +76,31 @@ const Blog = ({ blog, user }) => {
             </button>
           </span>
         </p>
-        <p>{blog.user.name}</p>
+        <p>{`Added by ${blog.user.name}`}</p>
         {user && user.username === blog.user.username && (
           <button style={deleteButtonStyle} onClick={() => handleRemove(blog)}>
             remove
           </button>
         )}
+        <h4>comments:</h4>
+        <form onSubmit={createNewComment}>
+          <div>
+            <input
+              id="title"
+              type="text"
+              value={newComment}
+              name="title"
+              onChange={handleCommentChange}
+            />
+            <button type="submit">add comment</button>
+          </div>
+        </form>
+        <ul>
+          {commentsOfBlog &&
+            commentsOfBlog.map((comment) => (
+              <li key={comment.id}>{comment.content}</li>
+            ))}
+        </ul>
       </div>
     </div>
   );

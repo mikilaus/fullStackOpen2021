@@ -6,6 +6,7 @@ import { initBlogs } from "./reducers/blogReducer";
 import { setNotification } from "./reducers/notificationReducer";
 import { setUser } from "./reducers/userReducer";
 import { initUsers } from "./reducers/usersReducer";
+import { initComments } from "./reducers/commentsReducer";
 
 import Blogs from "./components/Blogs";
 import blogService from "./services/blogs";
@@ -35,6 +36,7 @@ const App = () => {
   useEffect(() => {
     dispatch(initBlogs());
     dispatch(initUsers());
+    dispatch(initComments());
   }, [dispatch]);
 
   useEffect(() => {
@@ -60,13 +62,6 @@ const App = () => {
     } catch (exception) {
       dispatch(setNotification("wrong username or password", "error", 5));
     }
-    console.log("logging in with", username, password);
-  };
-
-  const handleLogout = (event) => {
-    event.preventDefault();
-    window.localStorage.removeItem("loggedUser");
-    dispatch(setUser(null));
   };
 
   const handleCreate = async (event) => {
@@ -91,8 +86,8 @@ const App = () => {
       setTitle("");
       setAuthor("");
       setUrl("");
-    } catch (error) {
-      console.log(error);
+    } catch (exception) {
+      dispatch(setNotification("Token missing", "error", 5));
     }
   };
 
@@ -113,20 +108,26 @@ const App = () => {
   };
 
   const userMatch = useRouteMatch("/users/:id");
-
-  const clickedUser = userMatch
-    ? users.find((user) => user.id === userMatch.params.id)
-    : null;
-
   const blogMatch = useRouteMatch("/blogs/:id");
 
-  const clickedBlog = blogMatch
-    ? blogs.find((blog) => blog.id === blogMatch.params.id)
-    : null;
+  let clickedUser;
+  let clickedBlog;
+
+  if (users) {
+    clickedUser = userMatch
+      ? users.find((user) => user.id === userMatch.params.id)
+      : null;
+  }
+
+  if (blogs) {
+    clickedBlog = blogMatch
+      ? blogs.find((blog) => blog.id === blogMatch.params.id)
+      : null;
+  }
 
   return (
     <div>
-      <Navigation currentUser={currentUser} handleLogout={handleLogout} />
+      <Navigation currentUser={currentUser} />
       <h1>Blogs</h1>
       <Notification />
       {!currentUser && (
@@ -140,16 +141,6 @@ const App = () => {
           />
         </Togglable>
       )}
-      {/* {currentUser && (
-        <p>
-          {currentUser.username} logged in{" "}
-          <span>
-            <button type="button" onClick={handleLogout}>
-              Logout
-            </button>
-          </span>
-        </p>
-      )} */}
 
       <Switch>
         <Route path="/users/:id">

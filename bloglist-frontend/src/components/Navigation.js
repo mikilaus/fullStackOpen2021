@@ -1,8 +1,19 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import { Link } from "react-router-dom";
 
-function Navigation({ currentUser, handleLogout }) {
+import { setUser } from "../reducers/userReducer";
+
+function Navigation({ currentUser }) {
+  const dispatch = useDispatch();
+
+  const handleLogout = (event) => {
+    event.preventDefault();
+    window.localStorage.removeItem("loggedUser");
+    dispatch(setUser(null));
+  };
+
   const padding = {
     padding: 5,
   };
