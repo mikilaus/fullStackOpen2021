@@ -15,20 +15,14 @@ function Navigation({ currentUser }) {
     dispatch(setUser(null));
   };
 
-  const padding = {
-    padding: 5,
-  };
-
   return (
     <Navbar className="justify-content-center bg-info">
       <Nav.Item>
-        <Link style={padding} to="/">
+        <Link to="/" className="mr-3">
           Blogs
         </Link>
       </Nav.Item>
-      <Link style={padding} to="/users">
-        Users
-      </Link>
+      <Link to="/users">Users</Link>
       {currentUser && (
         <>
           <Nav.Item className="ml-5">{currentUser.name} logged in </Nav.Item>

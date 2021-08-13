@@ -1,4 +1,5 @@
 import React from "react";
+import { Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const Notification = () => {
@@ -8,32 +9,10 @@ const Notification = () => {
     const { message, type } = notificationState;
 
     if (type === "error") {
-      const errorStyle = {
-        color: "red",
-        background: "lightgrey",
-        fontSize: 20,
-        borderStyle: "solid",
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
-      };
-      return (
-        <div className="error" style={errorStyle}>
-          {message}
-        </div>
-      );
+      return <Alert variant="danger">{message}</Alert>;
     }
     if (type === "success") {
-      const successStyle = {
-        color: "green",
-        background: "lightgrey",
-        fontSize: 20,
-        borderStyle: "solid",
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
-      };
-      return <div style={successStyle}>{message}</div>;
+      return <Alert variant="success">{message}</Alert>;
     }
   }
 

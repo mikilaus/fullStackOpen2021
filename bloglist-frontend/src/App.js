@@ -129,7 +129,7 @@ const App = () => {
   return (
     <>
       <Navigation currentUser={currentUser} />
-      <Container className="col-12 col-md-8 col-lg-6 bg-light">
+      <Container className="col-12 col-md-10 bg-light p-3">
         <h1 className="mb-5 mt-3">Blog App</h1>
         <Notification />
         {!currentUser && (

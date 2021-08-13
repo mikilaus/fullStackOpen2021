@@ -1,4 +1,5 @@
 import React from "react";
+import { Button, Form } from "react-bootstrap";
 
 const LoginForm = ({
   handleLogin,
@@ -10,24 +11,28 @@ const LoginForm = ({
   <div>
     <h2>Log in to application</h2>
 
-    <form onSubmit={handleLogin}>
-      <div>
+    <Form onSubmit={handleLogin}>
+      <Form.Group>
         username
-        <input id="username" value={username} onChange={handleUsernameChange} />
-      </div>
+        <Form.Control
+          id="username"
+          value={username}
+          onChange={handleUsernameChange}
+        />
+      </Form.Group>
       <div>
         password
-        <input
+        <Form.Control
           id="password"
           type="password"
           value={password}
           onChange={handlePasswordChange}
         />
       </div>
-      <button id="login-button" type="submit">
+      <Button id="login-button" type="submit" className="mt-3">
         login
-      </button>
-    </form>
+      </Button>
+    </Form>
   </div>
 );
 

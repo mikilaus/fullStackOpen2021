@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { Button, Container, Form } from "react-bootstrap";
+
 import { useDispatch, useSelector } from "react-redux";
 import { likeBlog, deleteBlog } from "../reducers/blogReducer";
 import { setNotification } from "../reducers/notificationReducer";
@@ -18,20 +20,6 @@ const Blog = ({ blog, user }) => {
   if (comments && blog) {
     commentsOfBlog = comments.filter((comment) => comment.blogId === blog.id);
   }
-
-  const blogStyle = {
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 2,
-    marginBottom: 5,
-    marginTop: 10,
-  };
-
-  const deleteButtonStyle = {
-    backgroundColor: "blue",
-    color: "white",
-    cursor: "pointer",
-  };
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
@@ -62,39 +50,48 @@ const Blog = ({ blog, user }) => {
   }
 
   return (
-    <div style={blogStyle} className="blog">
-      <h3>
+    <Container className="col-12">
+      <h3 className="mt-5">
         {blog.title} by {blog.author}
       </h3>
       <div>
-        <a href={blog.url}>{blog.url}</a>
-        <p>
+        <a href={blog.url} className="mt-3" target="_blank" rel="noreferrer">
+          {blog.url}
+        </a>
+        <p className="mt-3">{`Added by ${blog.user.name}`}</p>
+        <p className="mt-3">
           Likes: {blog.likes}{" "}
           <span>
-            <button id="like-button" onClick={() => handleLike(blog)}>
+            <Button
+              id="like-button"
+              onClick={() => handleLike(blog)}
+              className="btn-sm"
+            >
               Like
-            </button>
+            </Button>
           </span>
         </p>
-        <p>{`Added by ${blog.user.name}`}</p>
+
         {user && user.username === blog.user.username && (
-          <button style={deleteButtonStyle} onClick={() => handleRemove(blog)}>
+          <Button variant="danger" size="sm" onClick={() => handleRemove(blog)}>
             remove
-          </button>
+          </Button>
         )}
-        <h4>comments:</h4>
-        <form onSubmit={createNewComment}>
-          <div>
-            <input
+        <h4 className="mt-5 mb-4">Comments:</h4>
+        <Form onSubmit={createNewComment} className="mb-3">
+          <Form.Group>
+            <Form.Control
               id="title"
               type="text"
               value={newComment}
               name="title"
               onChange={handleCommentChange}
             />
-            <button type="submit">add comment</button>
-          </div>
-        </form>
+            <Button type="submit" className="btn-sm mt-1">
+              add comment
+            </Button>
+          </Form.Group>
+        </Form>
         <ul>
           {commentsOfBlog &&
             commentsOfBlog.map((comment) => (
@@ -102,7 +99,7 @@ const Blog = ({ blog, user }) => {
             ))}
         </ul>
       </div>
-    </div>
+    </Container>
   );
 };
 

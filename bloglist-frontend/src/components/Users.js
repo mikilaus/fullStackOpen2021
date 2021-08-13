@@ -1,10 +1,10 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 
 const Users = ({ users }) => (
-  <>
+  <Container className="mt-5">
     <h3>Users</h3>
     <Table striped>
       <thead>
@@ -28,7 +28,7 @@ const Users = ({ users }) => (
           )}
       </tbody>
     </Table>
-  </>
+  </Container>
 );
 
 export default Users;
