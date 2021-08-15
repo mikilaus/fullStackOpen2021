@@ -5,7 +5,7 @@ import { Container, Table } from "react-bootstrap";
 
 const Users = ({ users }) => (
   <Container className="mt-5">
-    <h3>Users</h3>
+    <h3 className="mb-3">Users:</h3>
     <Table striped>
       <thead>
         <tr>

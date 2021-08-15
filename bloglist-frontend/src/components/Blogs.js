@@ -9,7 +9,7 @@ const Blogs = () => {
 
   return (
     <Container className="mt-5">
-      <h4>Blogs:</h4>
+      <h3 className="mb-3">Blogs:</h3>
       {blogs.map((blog) => (
         <MainBlog key={blog.id} blog={blog} />
       ))}

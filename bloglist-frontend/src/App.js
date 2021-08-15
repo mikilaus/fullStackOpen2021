@@ -133,15 +133,17 @@ const App = () => {
         <h1 className="mb-5 mt-3">Blog App</h1>
         <Notification />
         {!currentUser && (
-          <Togglable buttonLabel="log in">
-            <Loginform
-              username={username}
-              password={password}
-              handleLogin={handleLogin}
-              handleUsernameChange={handleUsernameChange}
-              handlePasswordChange={handlePasswordChange}
-            />
-          </Togglable>
+          <Container>
+            <Togglable buttonLabel="log in">
+              <Loginform
+                username={username}
+                password={password}
+                handleLogin={handleLogin}
+                handleUsernameChange={handleUsernameChange}
+                handlePasswordChange={handlePasswordChange}
+              />
+            </Togglable>
+          </Container>
         )}
 
         <Switch>
@@ -157,8 +159,8 @@ const App = () => {
           <Route path="/">
             <Blogs />
             {currentUser && (
-              <>
-                <h4 className="mt-3 mb-3">Create a new blog</h4>
+              <Container>
+                <h4 className="mt-5 mb-3">Create a new blog</h4>
                 <Togglable buttonLabel="add blog" ref={BlogformRef}>
                   <Blogform
                     title={title}
@@ -170,7 +172,7 @@ const App = () => {
                     handleUrlChange={handleUrlChange}
                   />
                 </Togglable>
-              </>
+              </Container>
             )}
           </Route>
         </Switch>

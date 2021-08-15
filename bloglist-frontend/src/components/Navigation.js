@@ -16,18 +16,28 @@ function Navigation({ currentUser }) {
   };
 
   return (
-    <Navbar className="justify-content-center bg-info">
+    <Navbar className="justify-content-center bg-primary">
       <Nav.Item>
-        <Link to="/" className="mr-3">
+        <Link to="/" className="mr-3 text-light">
           Blogs
         </Link>
       </Nav.Item>
-      <Link to="/users">Users</Link>
+      <Nav.Item>
+        <Link to="/users" className="text-light">
+          Users
+        </Link>
+      </Nav.Item>
       {currentUser && (
         <>
-          <Nav.Item className="ml-5">{currentUser.name} logged in </Nav.Item>
+          <Nav.Item className="ml-5 text-dark">
+            {currentUser.name} logged in{" "}
+          </Nav.Item>
           <Nav.Item>
-            <Button variant="link" onClick={handleLogout}>
+            <Button
+              variant="link"
+              onClick={handleLogout}
+              className="text-light"
+            >
               Logout
             </Button>
           </Nav.Item>
