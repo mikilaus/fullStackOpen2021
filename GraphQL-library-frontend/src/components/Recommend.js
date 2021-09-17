@@ -1,26 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import { ALL_BOOKS, ALL_GENRES } from "../queries/queries";
+import { BOOKS_BY_GENRE, USER } from "../queries/queries";
 import { useQuery } from "@apollo/client";
 
-const Books = ({ show }) => {
-  const [uniqueGenres, setUniqueGenres] = useState(null);
+const Recommend = ({ show }) => {
   const [books, setBooks] = useState(null);
-
-  const result = useQuery(ALL_BOOKS, {
+  const [favorite, setFavorite] = useState("classic");
+  const user = useQuery(USER, {
+    fetchPolicy: "network-only",
+    nextFetchPolicy: "cache-first",
     onCompleted: (data) => {
-      setBooks(data.allBooks);
+      setFavorite(data.me.favoriteGenre);
     },
   });
-
-  useQuery(ALL_GENRES, {
+  const result = useQuery(BOOKS_BY_GENRE, {
+    variables: { genreToFilter: favorite },
     onCompleted: (data) => {
-      const filteredGenres = [];
-      data.allBooks.map((book) => {
-        return book.genres.map((genre) => filteredGenres.push(genre));
-      });
-      setUniqueGenres([...new Set(filteredGenres)]);
+      setBooks(data.allBooks);
     },
   });
 
@@ -32,12 +29,18 @@ const Books = ({ show }) => {
     return <div>Loading...</div>;
   }
 
+  if (!result.data) {
+    return <div>no Book found..</div>;
+  }
+
   return (
     <div>
       <h2>books</h2>
-      <p>in genre:</p>
-      {uniqueGenres &&
-        uniqueGenres.map((genre) => <button key={genre}>{genre}</button>)}
+
+      {user.data.me && (
+        <p>books in your favorite genre: {user.data.me.favoriteGenre}</p>
+      )}
+
       <table>
         <tbody>
           <tr>
@@ -58,8 +61,8 @@ const Books = ({ show }) => {
   );
 };
 
-Books.propTypes = {
+Recommend.propTypes = {
   show: PropTypes.bool,
 };
 
-export default Books;
+export default Recommend;

@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import App from "./App";
 import {
   ApolloClient,
   ApolloProvider,
@@ -7,7 +8,6 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import App from "./App";
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("Bookapp-token");

@@ -8,7 +8,7 @@ const LoginForm = ({ setToken, show, setPage }) => {
 
   const [login, result] = useMutation(LOGIN, {
     onError: (error) => {
-      console.log(error);
+      console.log(error.graphQLErrors[0].message);
     },
     onCompleted: () => {
       setPage("authors");
@@ -16,7 +16,6 @@ const LoginForm = ({ setToken, show, setPage }) => {
   });
 
   useEffect(() => {
-    console.log(result);
     if (result.data) {
       const token = result.data.login.value;
       setToken(token);
