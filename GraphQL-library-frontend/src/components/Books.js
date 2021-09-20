@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import { ALL_BOOKS, ALL_GENRES } from "../queries/queries";
-import { useQuery } from "@apollo/client";
+import { ALL_BOOKS, ALL_GENRES, BOOKS_BY_GENRE } from "../queries/queries";
+import { useQuery, useLazyQuery } from "@apollo/client";
 
 const Books = ({ show }) => {
   const [uniqueGenres, setUniqueGenres] = useState(null);
   const [books, setBooks] = useState(null);
+  const [getBooksByGenre, bookResult] = useLazyQuery(BOOKS_BY_GENRE, {
+    fetchPolicy: "no-cache",
+  });
+
+  useEffect(() => {
+    if (bookResult.data) {
+      setBooks(bookResult.data.allBooks);
+    }
+  }, [bookResult]);
 
   const result = useQuery(ALL_BOOKS, {
     onCompleted: (data) => {
@@ -24,6 +33,10 @@ const Books = ({ show }) => {
     },
   });
 
+  const showBooksByGenre = (genre) => {
+    getBooksByGenre({ variables: { genreToFilter: genre } });
+  };
+
   if (!show) {
     return null;
   }
@@ -36,8 +49,13 @@ const Books = ({ show }) => {
     <div>
       <h2>books</h2>
       <p>in genre:</p>
+      <button onClick={() => setBooks(result.data.allBooks)}>all Books</button>
       {uniqueGenres &&
-        uniqueGenres.map((genre) => <button key={genre}>{genre}</button>)}
+        uniqueGenres.map((genre) => (
+          <button onClick={() => showBooksByGenre(genre)} key={genre}>
+            {genre}
+          </button>
+        ))}
       <table>
         <tbody>
           <tr>

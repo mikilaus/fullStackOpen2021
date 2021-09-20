@@ -15,6 +15,7 @@ const Recommend = ({ show }) => {
     },
   });
   const result = useQuery(BOOKS_BY_GENRE, {
+    fetchPolicy: "no-cache",
     variables: { genreToFilter: favorite },
     onCompleted: (data) => {
       setBooks(data.allBooks);
