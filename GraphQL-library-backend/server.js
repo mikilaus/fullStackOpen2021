@@ -16,6 +16,8 @@ const { v1: uuid } = require("uuid");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "NEED_HERE_A_SECRET_KEY";
 
+const { setMaxListeners } = require("events");
+
 const MONGODB_URI =
   "mongodb+srv://user:mongopw@book-app.1pnxu.mongodb.net/booksApp?retryWrites=true&w=majority";
 
@@ -125,12 +127,16 @@ const resolvers = {
   Mutation: {
     addBook: async (root, args, context) => {
       const thisAuthor = await Author.findOne({ name: args.author });
+      console.log(thisAuthor);
       const book = new Book({ ...args, author: thisAuthor._id });
+      console.log(book);
       const currentUser = context.currentUser;
+      let addedBook = { ...args, author: thisAuthor, id: book._id };
+      console.log(addedBook);
 
-      /* if (!currentUser) {
+      if (!currentUser) {
         throw new AuthenticationError("not authenticated");
-      } */
+      }
       try {
         book.save();
       } catch (error) {
@@ -139,9 +145,9 @@ const resolvers = {
         });
       }
 
-      pubsub.publish("BOOK_ADDED", { bookAdded: book });
+      pubsub.publish("BOOK_ADDED", { bookAdded: addedBook });
 
-      return book;
+      return addedBook;
     },
     editAuthor: async (root, args, context) => {
       const author = await Author.findOne({ name: args.name });
@@ -209,4 +215,5 @@ const server = new ApolloServer({
 server.listen().then(({ url, subscriptionsUrl }) => {
   console.log(`Server ready at ${url}`);
   console.log(`Subscriptions ready at ${subscriptionsUrl}`);
+  setMaxListeners(0);
 });

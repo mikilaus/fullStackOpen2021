@@ -15,7 +15,7 @@ const Books = ({ show }) => {
     if (bookResult.data) {
       setBooks(bookResult.data.allBooks);
     }
-  }, [bookResult]);
+  }, [bookResult, show]);
 
   const result = useQuery(ALL_BOOKS, {
     onCompleted: (data) => {
