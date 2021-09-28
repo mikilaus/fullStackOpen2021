@@ -1,3 +1,19 @@
+interface calcValues {
+  valuesArray: Array<number>;
+  targetValue: number;
+}
+
+const parseCalcArguments = (args: Array<string>): calcValues => {
+  let values = args.map((arg) => Number(arg));
+  let slicedArray = values.slice(2, values.length - 1);
+  let target = values[values.length - 1];
+
+  return {
+    valuesArray: slicedArray,
+    targetValue: target,
+  };
+};
+
 interface statistics {
   periodLength: number;
   trainingDays: number;
@@ -30,13 +46,12 @@ const calculateExercises = (
     switch (rating) {
       case 1:
         return "its not enough work to achieve your goal";
-        break;
+
       case 2:
         return "not too bad but could be better";
 
       default:
         return "Excellent job!";
-        break;
     }
   };
 
@@ -51,4 +66,9 @@ const calculateExercises = (
   };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+try {
+  const { valuesArray, targetValue } = parseCalcArguments(process.argv);
+  console.log(calculateExercises(valuesArray, targetValue));
+} catch (error) {
+  console.log(error);
+}
