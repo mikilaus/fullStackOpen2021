@@ -1,0 +1,17 @@
+{
+  "name": "typescript-1st",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "ts-node": "ts-node",
+    "bmi": "ts-node bmiCalculator.ts",
+    "calculateExercises": "ts-node exerciseCalculator.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^16.10.1"
+  }
+}
