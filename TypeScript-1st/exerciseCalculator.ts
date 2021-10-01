@@ -4,9 +4,9 @@ interface calcValues {
 }
 
 const parseCalcArguments = (args: Array<string>): calcValues => {
-  let values = args.map((arg) => Number(arg));
-  let slicedArray = values.slice(2, values.length - 1);
-  let target = values[values.length - 1];
+  const values = args.map((arg) => Number(arg));
+  const slicedArray = values.slice(2, values.length - 1);
+  const target = values[values.length - 1];
 
   return {
     valuesArray: slicedArray,
@@ -24,15 +24,15 @@ interface statistics {
   average: number;
 }
 
-const calculateExercises = (
+export const calculateExercises = (
   values: Array<number>,
   target: number
 ): statistics => {
-  let trainedDays = values.filter((v) => v !== 0);
-  let sumOfDays = trainedDays.reduce((a, b) => a + b, 0);
-  let average = sumOfDays / values.length || 0;
+  const trainedDays = values.filter((v) => v !== 0);
+  const sumOfDays = trainedDays.reduce((a, b) => a + b, 0);
+  const average = sumOfDays / values.length || 0;
 
-  let rating = (): number => {
+  const rating = (): number => {
     if (average < target - 1) {
       return 1;
     } else if (average > target) {
@@ -42,7 +42,7 @@ const calculateExercises = (
     }
   };
 
-  let ratingDescription = (rating: number): string => {
+  const ratingDescription = (rating: number): string => {
     switch (rating) {
       case 1:
         return "its not enough work to achieve your goal";

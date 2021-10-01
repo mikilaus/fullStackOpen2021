@@ -24,8 +24,8 @@ interface bmiResults {
 }
 
 export const calculateBmi = (height: number, weight: number): bmiResults => {
-  let bmi: number = Number((weight / ((height * height) / 10000)).toFixed(2));
-  var bmiDesc = "";
+  const bmi = Number((weight / ((height * height) / 10000)).toFixed(2));
+  let bmiDesc = "";
 
   if (bmi < 18.6) {
     console.log("Under Weight");
